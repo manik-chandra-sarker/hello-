@@ -10,7 +10,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Start tmate Session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          detached: true
+      - name: Start Web Terminal
+        run: |
+          sudo apt-get update && sudo apt-get install -y ttyd
+          curl -LO https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared-linux-amd64
+          sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
+          ttyd -p 8080 bash &
+          sleep 2
+          cloudflared tunnel --url http://localhost:8080
+          
