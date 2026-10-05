@@ -1,0 +1,16 @@
+name: Interactive Live Terminal
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terminal:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Start tmate Session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          detached: true
